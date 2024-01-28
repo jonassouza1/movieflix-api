@@ -1,0 +1,397 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Movieflix API",
+    "description": "API responsible for managing Movieflix films",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/movies?language&sort=": {
+      "get": {
+        "tags": ["Movie"],
+        "summary": "get all movies",
+        "parameters": [
+          {
+            "name": "language",
+            "in": "query",
+            "description": "movies sorted by language",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "films sorted by release or title",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return all films",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#components/schemas/Movie"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies": {
+      "post": {
+        "tags": ["Movie"],
+        "summary": " register film",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/MovieInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "film registered successfully"
+          },
+          "409": {
+            "description": "duplicate film, it is not possible to register"
+          },
+          "500": {
+            "description": "Failed to register movie"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "put": {
+        "tags": ["Movie"],
+        "summary": "update the movie",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "movie ID to be updated",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/MovieInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "movie alteration in sucefull"
+          },
+          "404": {
+            "description": "this film doesn't exist"
+          },
+          "500": {
+            "description": "error when changing data"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Movie"],
+        "summary": "remove movie by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "movie ID to be deleted",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted movie"
+          },
+          "500": {
+            "description": "Failed to delete the movie"
+          }
+        }
+      }
+    },
+    "/movies/{genre}": {
+      "get": {
+        "tags": ["Movie"],
+        "summary": "search movies by genre",
+        "parameters": [
+          {
+            "name": "genre",
+            "in": "path",
+            "required": true,
+            "description": "search for films passing the genre",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#components/schemas/Movie"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "error when filtering movie by genre"
+          }
+        }
+      }
+    },
+    "/genres": {
+      "get": {
+        "tags": ["Genres"],
+        "summary": "get all genres",
+        "responses": {
+          "200": {
+            "description": "return all genres",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#components/schemas/Genres"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Genres"],
+        "summary": " register genre",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/GenreInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Genre registered successfully"
+          },
+          "409": {
+            "description": "duplicate genre, it is not possible to register"
+          },
+          "500": {
+            "description": "Failed to register genre"
+          }
+        }
+      }
+    },
+    "/genres/{id}": {
+      "put": {
+        "tags": ["Genres"],
+        "summary": "update the genre",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "genre ID to be updated",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/GenreInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "genre alteration in sucefull"
+          },
+          "404": {
+            "description": "this genre does not exist"
+          },
+          "500": {
+            "description": "error when changing data"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Genres"],
+        "summary": "remove genre by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "genre ID to be deleted",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted genre"
+          },
+          "400": {
+            "description": "gender not found"
+          },
+          "500": {
+            "description": "Failed to delete the genre"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "movie id"
+          },
+          "title": {
+            "type": "string",
+            "description": "movie title"
+          },
+          "genre_id": {
+            "type": "integer",
+            "description": "movie genre"
+          },
+          "genres": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "gender ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "name of the genre"
+              }
+            }
+          },
+          "language_id": {
+            "type": "integer",
+            "description": "movie language"
+          },
+          "languages": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "language ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "language name"
+              }
+            }
+          },
+          "oscar_count": {
+            "type": "integer",
+            "description": "movie oscar count"
+          },
+          "release_date": {
+            "type": "string",
+            "format": "date",
+            "description": "movie release date"
+          }
+        }
+      },
+      "MovieInput": {
+        "type": "object",
+        "required": [
+          "title",
+          "genre_id",
+          "language_id",
+          "oscar_count",
+          "release_date"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "film title"
+          },
+          "genre_id": {
+            "type": "integer",
+            "description": "film genre id "
+          },
+          "language_id": {
+            "type": "integer",
+            "description": "film language id "
+          },
+          "oscar_count": {
+            "type": "integer",
+            "description": "Oscar amount for the film"
+          },
+          "release_date": {
+            "type": "string",
+            "format": "date",
+            "description": "film release date"
+          }
+        }
+      },
+      "Genres": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "genre id"
+          },
+          "name": {
+            "type": "string",
+            "description": "genre name"
+          }
+        }
+      },
+      "GenreInput": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "genre name"
+          }
+        }
+      }
+    }
+  }
+}
