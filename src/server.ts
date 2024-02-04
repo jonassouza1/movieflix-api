@@ -128,9 +128,7 @@ app.get("/movies/:genre", async (req, res) => {
     );
     res.status(200).send(moviesFilteredByGenre?.rows);
   } catch (error) {
-    return res
-      .status(500)
-      .send({ message: "error when filtering movie by genre" });
+    res.status(500).send({ message: "error when filtering movie by genre" });
   }
 });
 
