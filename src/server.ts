@@ -2,12 +2,30 @@ import express from "express";
 import database from "./infra/database";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger.json";
-require('dotenv').config();
+const helmet = require("helmet");
+import * as path from "path";
+import * as dotenv from "dotenv";
+const envPath = path.resolve(__dirname, "../../.env.development");
+dotenv.config({ path: envPath });
+
 
 const port = process.env.PORT
 const app = express();
 app.use(express.json());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://vercel.live"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", "https://vercel.live"],
+    },
+  })
+);
 
 function transformTheFirstLetterOfThePhraseIntoUppercase(text: string) {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
