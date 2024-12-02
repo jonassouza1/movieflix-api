@@ -2,8 +2,9 @@ import express from "express";
 import database from "./infra/database";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger.json";
+require('dotenv').config();
 
-const port = 3000;
+const port = process.env.PORT
 const app = express();
 app.use(express.json());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
