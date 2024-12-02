@@ -41,12 +41,12 @@ app.use(express_1.default.json());
 app.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.use(helmet.contentSecurityPolicy({
     directives: {
-        defaultSrc: ["'self'"],
+        defaultSrc: ["'self'", "https://vercel.live"],
         scriptSrc: ["'self'", "'unsafe-inline'", "https://vercel.live"],
         styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", "data:"],
-        connectSrc: ["'self'", "https://vercel.live"],
-    },
+        connectSrc: ["'self'", "https://vercel.live"]
+    }
 }));
 function transformTheFirstLetterOfThePhraseIntoUppercase(text) {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();

@@ -18,12 +18,12 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
+      defaultSrc: ["'self'", "https://vercel.live"],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://vercel.live"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "https://vercel.live"],
-    },
+      connectSrc: ["'self'", "https://vercel.live"]
+    }
   })
 );
 
