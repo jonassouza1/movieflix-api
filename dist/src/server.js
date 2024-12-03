@@ -44,7 +44,7 @@ const cors_1 = __importDefault(require("cors"));
 const helmet = require("helmet");
 const path = __importStar(require("path"));
 const dotenv = __importStar(require("dotenv"));
-const envPath = path.resolve(__dirname, "../.env.development");
+const envPath = path.resolve(__dirname, "../../.env.development");
 dotenv.config({ path: envPath });
 const port = process.env.PORT;
 const app = (0, express_1.default)();
