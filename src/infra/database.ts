@@ -32,7 +32,7 @@ function getSSLValues() {
     };
   }
 
-  return process.env.NODE_ENV === "production" ? true : true;
+  return process.env.NODE_ENV === "production" ? true : false;
 }
 export default {
   query: query,
