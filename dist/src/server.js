@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const database_1 = __importDefault(require("./infra/database"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-const swagger_json_1 = __importDefault(require("../dist/swagger.json"));
+const swagger_json_1 = __importDefault(require("../swagger.json"));
 const cors_1 = __importDefault(require("cors"));
 const helmet = require("helmet");
 const path = __importStar(require("path"));

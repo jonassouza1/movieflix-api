@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/src/server.js",
     "dev": "npx tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "tsc --build",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write ."
   },
