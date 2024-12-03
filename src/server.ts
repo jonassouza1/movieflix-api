@@ -1,10 +1,9 @@
 import express from "express";
 import database from "./infra/database";
 import swaggerUi from "swagger-ui-express";
-import swaggerUiDist from "swagger-ui-dist";
+import swaggerDocument from "../swagger.json";
 import cors from "cors";
 const helmet = require("helmet");
-import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
 
@@ -14,17 +13,10 @@ dotenv.config({ path: envPath });
 const port = process.env.PORT
 
 const app = express();
-app.use(cors({ origin: '*' }));
 app.use(express.json());
+app.use(cors({ origin: '*' }));
 
-
-const swaggerPath = path.resolve(__dirname, "../swagger.json");
-const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, "utf8"));
-app.use("/swagger-ui", express.static(swaggerUiDist.absolutePath()));
-app.use("/swagger.json", express.static(swaggerPath));
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument ));
-
-
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
   helmet.contentSecurityPolicy({

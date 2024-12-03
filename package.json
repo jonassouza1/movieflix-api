@@ -18,13 +18,11 @@
   "license": "ISC",
   "dependencies": {
     "@types/cors": "^2.8.17",
-    "@types/swagger-ui-dist": "^3.30.5",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "helmet": "^8.0.0",
     "pg": "^8.13.1",
-    "swagger-ui-dist": "^5.18.2",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
