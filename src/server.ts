@@ -2,6 +2,7 @@ import express from "express";
 import database from "./infra/database";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger.json";
+import cors from "cors";
 const helmet = require("helmet");
 import * as path from "path";
 import * as dotenv from "dotenv";
@@ -11,6 +12,7 @@ dotenv.config({ path: envPath });
 
 const port = process.env.PORT
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -18,12 +20,12 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", "https://vercel.live"],
+      defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://vercel.live"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "https://vercel.live"]
-    }
+      connectSrc: ["'self'", "https://vercel.live"],
+    },
   })
 );
 
@@ -76,7 +78,7 @@ app.get("/movies", async (req, res) => {
   }
 });
 
-app.post("/movies", async (req, res) => {
+app.post("/movies", async (req:any, res:any) => {
   const { title, release_date, genre_id, language_id, oscar_count } = req.body;
   try {
     const queryDuplicateMovieByTitle: any = await database.query(
@@ -108,7 +110,7 @@ app.post("/movies", async (req, res) => {
   res.status(201).send({ message: "film registered successfully" });
 });
 
-app.put("/movies/:id", async (req, res) => {
+app.put("/movies/:id", async (req:any, res:any) => {
   const id = Number(req.params.id);
   const { title, release_date, genre_id, language_id, oscar_count } = req.body;
 
@@ -161,7 +163,7 @@ app.delete("/movies/:id", async (req, res) => {
   res.status(200).send({ message: "Successfully deleted movie" });
 });
 
-app.put("/genres/:id", async (req, res) => {
+app.put("/genres/:id", async (req:any, res:any) => {
   const { name } = req.body;
   const id = req.params.id;
   const nameConverted = transformTheFirstLetterOfThePhraseIntoUppercase(name);
@@ -186,7 +188,7 @@ app.put("/genres/:id", async (req, res) => {
   res.status(200).send({ message: "genre alteration in sucefull" });
 });
 
-app.post("/genres", async (req, res) => {
+app.post("/genres", async (req:any, res:any) => {
   const { name } = req.body;
   const nameConverted = transformTheFirstLetterOfThePhraseIntoUppercase(name);
   if (!name) {
@@ -222,7 +224,7 @@ app.get("/genres", async (req, res) => {
   }
 });
 
-app.delete("/genres/:id", async (req, res) => {
+app.delete("/genres/:id", async (req:any, res:any) => {
   const id = req.params.id;
 
   try {
