@@ -1,11 +1,15 @@
 import express from "express";
 import database from "./infra/database";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "../swagger.json";
 import cors from "cors";
 const helmet = require("helmet");
+import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
+
+
+const swaggerPath = path.resolve(__dirname, "../swagger.json");
+const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, "utf8"));
 const envPath = path.resolve(__dirname, "../../.env.development");
 dotenv.config({ path: envPath });
 
@@ -15,6 +19,7 @@ app.use(cors({ origin: '*' }));
 
 app.use(express.json());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 
 app.use(
