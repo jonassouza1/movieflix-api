@@ -48,7 +48,7 @@ const envPath = path.resolve(__dirname, "../../.env.development");
 dotenv.config({ path: envPath });
 const port = process.env.PORT;
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({ origin: '*' }));
 app.use(express_1.default.json());
 app.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.use(helmet.contentSecurityPolicy({
