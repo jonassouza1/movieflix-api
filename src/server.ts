@@ -6,9 +6,8 @@ import cors from "cors";
 const helmet = require("helmet");
 import * as path from "path";
 import * as dotenv from "dotenv";
-const envPath = path.resolve(__dirname, "../../.env.development");
+const envPath = path.resolve(__dirname, "../.env.development");
 dotenv.config({ path: envPath });
-
 
 const port = process.env.PORT
 const app = express();
