@@ -8,10 +8,12 @@
   ],
   "routes": [
     {
+      "src": "/docs/swagger.json",
+      "dest": "dist/swagger.json"
+    },
+    {
       "src": "/(.*)",
       "dest": "dist/src/server.js"
     }
   ]
- 
- 
 }
