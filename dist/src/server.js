@@ -50,7 +50,6 @@ const port = process.env.PORT;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({ origin: '*' }));
-//app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/docs/static", express_1.default.static(path.dirname(require.resolve("swagger-ui-dist/index.html"))));
 app.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.use(helmet.contentSecurityPolicy({

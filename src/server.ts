@@ -16,14 +16,13 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-//app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
   "/docs/static",
   express.static(path.dirname(require.resolve("swagger-ui-dist/index.html")))
 );
-
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
