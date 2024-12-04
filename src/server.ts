@@ -17,12 +17,13 @@ app.use(express.json());
 app.use(cors({ origin: '*' }));
 
 //app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-const swaggerPath = path.resolve(__dirname, "../swagger.json");
+
 app.use(
-  "/docs",
-  swaggerUi.serve,
-  swaggerUi.setup(require(swaggerPath)) // Carrega o swagger.json dinamicamente
+  "/docs/static",
+  express.static(path.dirname(require.resolve("swagger-ui-dist/index.html")))
 );
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(
   helmet.contentSecurityPolicy({
     directives: {

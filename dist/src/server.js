@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const database_1 = __importDefault(require("./infra/database"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_json_1 = __importDefault(require("../swagger.json"));
 const cors_1 = __importDefault(require("cors"));
 const helmet = require("helmet");
 const path = __importStar(require("path"));
@@ -50,9 +51,8 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({ origin: '*' }));
 //app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-const swaggerPath = path.resolve(__dirname, "../swagger.json");
-app.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(require(swaggerPath)) // Carrega o swagger.json dinamicamente
-);
+app.use("/docs/static", express_1.default.static(path.dirname(require.resolve("swagger-ui-dist/index.html"))));
+app.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'self'"],
