@@ -16,8 +16,13 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+//app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const swaggerPath = path.resolve(__dirname, "../swagger.json");
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(require(swaggerPath)) // Carrega o swagger.json dinamicamente
+);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
